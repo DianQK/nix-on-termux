@@ -58,8 +58,7 @@ exec /data/data/com.termux/files/usr/bin/proot \
   -b ${installationDir}/nix:/nix \
   -b ${installationDir}/var:/var \
   -b ${installationDir}/var/run:/run \
-  -b ${installationDir}/bin:/bin! \
-  -b ${installationDir}/etc:/etc! \
+  -b ${installationDir}/etc:/etc \
   -b ${installationDir}/tmp:/tmp \
   -b ${installationDir}:/usr \
   -b ${installationDir}/dev/shm:/dev/shm \
