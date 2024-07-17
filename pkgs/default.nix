@@ -10,8 +10,6 @@
 
 let
   nativeSystem = if _nativeSystem == null then system else _nativeSystem;
-  nixDirectory = callPackage ./nix-directory.nix { inherit system; };
-  initialPackageInfo = import "${nixDirectory}/nix-support/package-info.nix";
 
   pkgs = import nixpkgs { system = nativeSystem; };
 
@@ -30,17 +28,8 @@ let
     isFlake = true;
 
     config = {
-      imports = [ ../modules/build/initial-build.nix ];
-
-      _module.args = {
-        inherit initialPackageInfo;
-        pkgs = pkgs.lib.mkForce pkgs; # to override ./modules/nixpkgs/config.nix
-      };
 
       system.stateVersion = "24.05";
-
-      # Fix invoking bash after initial build.
-      user.shell = "${initialPackageInfo.bash}/bin/bash";
 
       build = {
         channel = {
@@ -56,20 +45,12 @@ let
   callPackage = pkgs.lib.callPackageWith (
     pkgs // customPkgs // {
       inherit (modules) config;
-      inherit callPackage nixpkgs nixDirectory initialPackageInfo;
+      inherit callPackage nixpkgs;
       targetSystem = system;
     }
   );
-
-  customPkgs = {
-    bootstrap = callPackage ./bootstrap.nix { };
-    bootstrapZip = callPackage ./bootstrap-zip.nix { };
-    prootTermux = callPackage ./cross-compiling/proot-termux.nix { };
-    tallocStatic = callPackage ./cross-compiling/talloc-static.nix { };
-  };
 in
 
 {
   inherit (modules) config;
-  inherit customPkgs;
 }

@@ -26,7 +26,7 @@
    <para>
     To use these options, edit the config file in
     <filename>~/.config/nixpkgs/nix-on-droid.nix</filename> or in case of a flake setup,
-    set the <replaceable>modules</replaceable> value in the <varname>nixOnDroidConfiguration</varname>
+    set the <replaceable>modules</replaceable> value in the <varname>nixOnTermuxConfiguration</varname>
     call:
 <programlisting language="nix">
 {
@@ -41,7 +41,7 @@
 
   outputs = { self, nixpkgs, nix-on-droid }: {
 
-    nixOnDroidConfigurations.deviceName = nix-on-droid.lib.nixOnDroidConfiguration {
+    nixOnTermuxConfigurations.deviceName = nix-on-droid.lib.nixOnTermuxConfiguration {
       <replaceable>modules</replaceable> = [ ./nix-on-droid.nix ];
     };
 

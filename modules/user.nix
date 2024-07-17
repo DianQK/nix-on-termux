@@ -28,7 +28,7 @@ in
     user = {
       group = mkOption {
         type = types.str;
-        readOnly = true;
+        # readOnly = true;
         description = "Group name.";
       };
 
@@ -43,7 +43,7 @@ in
 
       home = mkOption {
         type = types.path;
-        readOnly = true;
+        # readOnly = true;
         description = "Path to home directory.";
       };
 
@@ -56,7 +56,7 @@ in
 
       userName = mkOption {
         type = types.str;
-        readOnly = true;
+        # readOnly = true;
         description = "User name.";
       };
 
@@ -90,9 +90,9 @@ in
     };
 
     user = {
-      group = "nix-on-droid";
-      home = "/data/data/com.termux.nix/files/home";
-      userName = "nix-on-droid";
+      group = mkDefault "nix-on-termux";
+      home = mkDefault "/data/data/com.termux/files/home";
+      userName = mkDefault "nix-on-termux";
     };
 
   };

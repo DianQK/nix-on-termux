@@ -69,7 +69,7 @@
 
       formatter = forEachSystem (system: nix-formatter-pack.lib.mkFormatter formatterPackArgsFor.${system});
 
-      lib.nixOnDroidConfiguration =
+      lib.nixOnTermuxConfiguration =
         { pkgs
         , modules ? [ ]
         , extraSpecialArgs ? { }
@@ -87,7 +87,7 @@
           pkgs.lib.throwIf
             (config != null || extraModules != null || system != null)
             ''
-              The 'nixOnDroidConfiguration' arguments
+              The 'nixOnTermuxConfiguration' arguments
 
               - 'config'
               - 'extraModules'

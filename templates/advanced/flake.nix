@@ -18,7 +18,7 @@
 
   outputs = { self, nixpkgs, home-manager, nix-on-droid }: {
 
-    nixOnDroidConfigurations.default = nix-on-droid.lib.nixOnDroidConfiguration {
+    nixOnTermuxConfigurations.default = nix-on-droid.lib.nixOnTermuxConfiguration {
       modules = [
         ./nix-on-droid.nix
 

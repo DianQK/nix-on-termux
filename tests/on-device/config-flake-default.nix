@@ -8,8 +8,8 @@
   };
 
   outputs = { nix-on-droid, nixpkgs, ... }: {
-    nixOnDroidConfigurations = {
-      default = nix-on-droid.lib.nixOnDroidConfiguration {
+    nixOnTermuxConfigurations = {
+      default = nix-on-droid.lib.nixOnTermuxConfiguration {
         pkgs = import nixpkgs { system = "<<SYSTEM>>"; };
         modules = [ ./nix-on-droid.nix ];
       };

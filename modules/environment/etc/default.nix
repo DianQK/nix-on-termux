@@ -116,7 +116,7 @@ in
       inherit etc;
 
       activation.setUpEtc = ''
-        $DRY_RUN_CMD bash ${./setup-etc.sh} /etc ${etc}/etc ${toString config.environment.etcBackupExtension}
+        $DRY_RUN_CMD bash ${./setup-etc.sh} ${config.build.installationDir}/etc ${config.build.installationDir}${etc}/etc ${config.build.installationDir} ${toString config.environment.etcBackupExtension}
       '';
     };
 

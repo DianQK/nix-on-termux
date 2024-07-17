@@ -17,7 +17,11 @@ with lib;
 
     environment.etc = {
       "profile".text = ''
-        . "${config.build.sessionInit}/etc/profile.d/nix-on-droid-session-init.sh"
+        if [[ -d "/nix" ]]; then
+          . "${config.build.sessionInit}/etc/profile.d/nix-on-droid-session-init.sh"
+        else
+          ${builtins.readFile ./termux_profile}
+        fi
       '';
 
       "zshenv".text = ''

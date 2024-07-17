@@ -12,8 +12,8 @@
   };
 
   outputs = { nix-on-droid, nixpkgs, ... }: {
-    nixOnDroidConfigurations = {
-      device = nix-on-droid.lib.nixOnDroidConfiguration {
+    nixOnTermuxConfigurations = {
+      device = nix-on-droid.lib.nixOnTermuxConfiguration {
         pkgs = import nixpkgs { system = "<<SYSTEM>>"; };
         modules = [ ./nix-on-droid.nix ];
       };

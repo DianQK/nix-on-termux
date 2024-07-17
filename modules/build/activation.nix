@@ -162,12 +162,8 @@ in
             ln --symbolic ${config.build.etc}/etc $out/etc
             ln --symbolic ${config.environment.path} $out/nix-on-droid-path
 
-            ln --symbolic ${config.environment.files.login} $out/filesystem/bin/login
-            ln --symbolic ${config.environment.files.loginInner} $out/filesystem/usr/lib/login-inner
-            ln --symbolic ${config.environment.files.prootStatic}/bin/proot-static $out/filesystem/bin/proot-static
-
-            ln --symbolic ${config.environment.binSh} $out/filesystem/bin/sh
-            ln --symbolic ${config.environment.usrBinEnv} $out/filesystem/usr/bin/env
+            ln --symbolic ${config.environment.files.nixLogin} $out/filesystem/bin/nix-login
+            ln --symbolic ${config.environment.files.loginInner} $out/filesystem/usr/lib/nix-login-inner
           '';
     };
 

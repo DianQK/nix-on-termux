@@ -141,13 +141,13 @@ while [[ $# -gt 0 ]]; do
             ;;
         -F|--flake)
             PASSTHROUGH_OPTS+=(--extra-experimental-features "flakes nix-command")
-            # add "nixOnDroidConfigurations." as prefix in attribute name, e.g.
-            # /path/to/flake#device -> /path/to/flake#nixOnDroidConfigurations.device
+            # add "nixOnTermuxConfigurations." as prefix in attribute name, e.g.
+            # /path/to/flake#device -> /path/to/flake#nixOnTermuxConfigurations.device
             # if no attribute name given, use "default"
             if [[ "$1" =~ \# ]]; then
-                FLAKE_CONFIG_URI="${1%#*}#nixOnDroidConfigurations.${1#*#}"
+                FLAKE_CONFIG_URI="${1%#*}#nixOnTermuxConfigurations.${1#*#}"
             else
-                FLAKE_CONFIG_URI="${1}#nixOnDroidConfigurations.default"
+                FLAKE_CONFIG_URI="${1}#nixOnTermuxConfigurations.default"
             fi
             shift
             ;;

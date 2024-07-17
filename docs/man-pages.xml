@@ -29,7 +29,7 @@
    <title>Options</title>
    <para>
     You can use the following options in <filename>nix-on-droid.nix</filename> or in the
-    <varname>modules</varname> argument of <varname>lib.nixOnDroidConfiguration</varname>
+    <varname>modules</varname> argument of <varname>lib.nixOnTermuxConfiguration</varname>
     in your <filename>flake.nix</filename>:
    </para>
    <xi:include href="./nmd-result/nix-on-droid-options.xml" />

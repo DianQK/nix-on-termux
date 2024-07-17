@@ -65,12 +65,12 @@ in
 
     environment = {
       packages = [
-        (pkgs.callPackage ../../nix-on-droid { nix = config.nix.package; })
+        # (pkgs.callPackage ../../nix-on-droid { nix = config.nix.package; })
         pkgs.bashInteractive
-        pkgs.cacert
+        # pkgs.cacert
         pkgs.coreutils
         pkgs.less # since nix tools really want a pager available, #27
-        config.nix.package
+        # config.nix.package
       ];
 
       path = pkgs.buildEnv {

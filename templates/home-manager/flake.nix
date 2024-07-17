@@ -18,7 +18,7 @@
 
   outputs = { self, nixpkgs, home-manager, nix-on-droid }: {
 
-    nixOnDroidConfigurations.default = nix-on-droid.lib.nixOnDroidConfiguration {
+    nixOnTermuxConfigurations.default = nix-on-droid.lib.nixOnTermuxConfiguration {
       pkgs = import nixpkgs { system = "aarch64-linux"; };
       modules = [ ./nix-on-droid.nix ];
     };

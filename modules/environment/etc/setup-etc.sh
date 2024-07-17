@@ -12,14 +12,22 @@ set -eu -o pipefail
 : "${VERBOSE_ECHO:=true}"
 
 etc="${1}"
-static="/etc/static"
 new_etc="${2}"
-backup_extension="${3:-}"
+prefix="${3}"
+static="${prefix}/etc/static"
+backup_extension="${4:-}"
 
 function atomic_symlink() {
     local source="${1}"
     local target="${2}"
     local target_tmp="${target}.tmp"
+
+    local real_source=$(realpath "$source")
+
+    if [[ $real_source == /nix* ]]; then
+        $VERBOSE_ECHO "Fix ${source} to ${prefix}${real_source}"
+        source="${prefix}${real_source}"
+    fi
 
     $VERBOSE_ECHO "Atomic symlink ${source} to ${target}..."
 
@@ -76,8 +84,10 @@ function link() {
 
         if [[ -e "${target}" ]] && ! is_static "${target}"; then
             if [[ -n "${backup_extension}" ]]; then
-                echo "Backing up '${target}' to '${target}${backup_extension}'..."
-                cp "${target}" "${target}${backup_extension}"
+                if [[ ! -d "${target}${backup_extension}" ]]; then
+                    echo "Backing up '${target}' to '${target}${backup_extension}'..."
+                    cp -r "${target}" "${target}${backup_extension}"
+                fi
 
                 atomic_symlink "${static}/${name}" "${target}"
             else

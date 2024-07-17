@@ -14,12 +14,12 @@
 
 ### Compatibility considerations
 
-* `nixOnDroidConfigurations` `pkgs` argument is now mandatory.
+* `nixOnTermuxConfigurations` `pkgs` argument is now mandatory.
   Put simply, if one's using a flake config, they need to add `nixpkgs` to
   `outputs = { self, nixpkgs, ... }:` if it was previously missing,
   then add a
   `pkgs = import nixpkgs { system = "aarch64-linux"; };`
-  as an argument to `nixOnDroidConfiguration`.
+  as an argument to `nixOnTermuxConfiguration`.
   If in doubt, refer to the `templates`.
 * `config.arch` option has been dropped. Consider using `pkgs.system` instead.
 
@@ -46,7 +46,7 @@
 * Fix usage of `extraSpecialArgs`: All values were previously set in
   `_module.args` instead of passing them as `specialArgs` into `evalModules`.
   This enables usage of `specialArgs` to use in `imports` in module defintions.
-* In an effort to reduce the number of arguments to `lib.nixOnDroidConfiguration`
+* In an effort to reduce the number of arguments to `lib.nixOnTermuxConfiguration`
   function in flake configurations, `system` is now inferred from `pkgs.system`
   and `config` and `extraModules` are now combined into `modules`
 * The option `system.stateVersion` does not have a default value anymore.
@@ -71,7 +71,7 @@
 * Add support for `nix profile` managed profiles
 * Add possibilty to bootstrap Nix-on-Droid with flakes via prompt on initial
   boot
-* For flake setups, the output `nixOnDroidConfigurations.default` will be used
+* For flake setups, the output `nixOnTermuxConfigurations.default` will be used
   when `nix-on-droid switch --flake path/to/flake` is called without attribute
   name
 * Add html and man pages with all available options, see <https://t184256.github.io/nix-on-droid/>
