@@ -146,6 +146,7 @@ in
           $DRY_RUN_CMD nix-env --profile "${profileDirectory}" --set "$_NOD_GENERATION_DIR"
         fi
         mkdir --parents /run/current-system
+        rm -rf /run/current-system/sw
         ln -sf ${config.environment.path} /run/current-system/sw
       '';
 
