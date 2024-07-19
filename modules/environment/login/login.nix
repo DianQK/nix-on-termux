@@ -58,7 +58,7 @@ exec ${installationDir}/bin/proot \
   -b ${installationDir}/nix:/nix \
   -b ${installationDir}/var:/var \
   -b ${installationDir}/run:/run \
-  -b ${installationDir}/etc:/etc \
+  -b ${installationDir}/etc:/etc! \
   -b ${installationDir}/tmp:/tmp \
   -b ${installationDir}:/usr \
   -b ${installationDir}/dev/shm:/dev/shm \

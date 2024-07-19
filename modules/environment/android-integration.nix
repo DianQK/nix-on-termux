@@ -11,6 +11,8 @@ let
     pkgs.callPackage (import ../../pkgs/android-integration/termux-tools.nix) {
       inherit termux-am;
     };
+  rish =
+    pkgs.callPackage (import ../../pkgs/rish) { };
 in
 {
 
@@ -113,6 +115,15 @@ in
       '';
     };
 
+    rish.enable = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      example = "true";
+      description = lib.mdDoc ''
+        Provide rish from Shizuku.
+      '';
+    };
+
   };
 
   ###### implementation
@@ -127,6 +138,7 @@ in
       (ifD cfg.termux-wake-lock.enable termux-tools.wake_lock) ++
       (ifD cfg.termux-wake-unlock.enable termux-tools.wake_unlock) ++
       (ifD cfg.xdg-open.enable termux-tools.xdg_open) ++
+      (ifD cfg.rish.enable rish) ++
       (ifD cfg.unsupported.enable termux-tools.out);
   };
 }
