@@ -1,18 +1,13 @@
 # Copyright (c) 2019-2024, see AUTHORS. Licensed under MIT License, see LICENSE.
 
-{ nixpkgs
-, system  # system to compile for, user-facing name of targetSystem
-, _nativeSystem ? null  # system to cross-compile from, see flake.nix
+{ pkgs
+, system
 , nixOnDroidChannelURL ? null
 , nixpkgsChannelURL ? null
 , nixOnDroidFlakeURL ? null
 }:
 
 let
-  nativeSystem = if _nativeSystem == null then system else _nativeSystem;
-
-  pkgs = import nixpkgs { system = nativeSystem; };
-
   urlOptionValue = url: envVar:
     let
       envValue = builtins.getEnv envVar;
@@ -45,12 +40,21 @@ let
   callPackage = pkgs.lib.callPackageWith (
     pkgs // customPkgs // {
       inherit (modules) config;
-      inherit callPackage nixpkgs;
+      inherit callPackage;
       targetSystem = system;
     }
   );
+
+  customPkgs = {
+    rish = callPackage ./rish { };
+    # bootstrap = callPackage ./bootstrap.nix { };
+    # bootstrapZip = callPackage ./bootstrap-zip.nix { };
+    # prootTermux = callPackage ./cross-compiling/proot-termux.nix { };
+    # tallocStatic = callPackage ./cross-compiling/talloc-static.nix { };
+  };
 in
 
 {
   inherit (modules) config;
+  inherit customPkgs;
 }

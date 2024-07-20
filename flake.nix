@@ -103,17 +103,9 @@
 
       packages = forEachSystem (system:
         let
-          flattenArch = arch: derivationAttrset:
-            nixpkgs.lib.attrsets.mapAttrs'
-              (name: drv:
-                nixpkgs.lib.attrsets.nameValuePair (name + "-" + arch) drv
-              )
-              derivationAttrset;
-          perArchCustomPkgs = arch: flattenArch arch
-            (import ./pkgs {
-              _nativeSystem = system; # system to cross-compile from
-              system = "${arch}-linux"; # system to cross-compile to
-              nixpkgs = nixpkgs;
+          customPkgs = (import ./pkgs {
+            inherit system;
+            pkgs = nixpkgs.legacyPackages.${system};
             }).customPkgs;
 
           docs = import ./docs {
@@ -125,8 +117,7 @@
         {
           nix-on-droid = nixpkgs.legacyPackages.${system}.callPackage ./nix-on-droid { };
         }
-        // (perArchCustomPkgs "aarch64")
-        // (perArchCustomPkgs "x86_64")
+        // customPkgs
         // docs
       );
 
