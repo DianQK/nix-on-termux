@@ -47,6 +47,7 @@ let
 
   customPkgs = {
     rish = callPackage ./rish { };
+    mesa-termux = callPackage ./mesa-termux { };
     # bootstrap = callPackage ./bootstrap.nix { };
     # bootstrapZip = callPackage ./bootstrap-zip.nix { };
     # prootTermux = callPackage ./cross-compiling/proot-termux.nix { };
