@@ -106,7 +106,7 @@
           customPkgs = (import ./pkgs {
             inherit system;
             pkgs = nixpkgs.legacyPackages.${system};
-            }).customPkgs;
+          }).customPkgs;
 
           docs = import ./docs {
             inherit home-manager;
