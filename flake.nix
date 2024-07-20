@@ -2,15 +2,10 @@
   description = "Nix-enabled environment for your Android device";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs";
-
-    # for bootstrap zip ball creation and proot-termux builds, we use a fixed version of nixpkgs to ease maintanence.
-    # head of nixos-24.05 as of 2024-07-06
-    # note: when updating nixpkgs-for-bootstrap, update store paths of proot-termux in modules/environment/login/default.nix
-    nixpkgs-for-bootstrap.url = "github:NixOS/nixpkgs/49ee0e94463abada1de470c9c07bfc12b36dcf40";
+    nixpkgs.url = "github:NixOS/nixpkgs/693bc46d169f5af9c992095736e82c3488bf7dbb";
 
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -20,15 +15,13 @@
       inputs.nmd.follows = "nmd";
     };
 
-    nixpkgs-docs.url = "github:NixOS/nixpkgs/release-23.05";
-
     nmd = {
       url = "sourcehut:~rycee/nmd";
-      inputs.nixpkgs.follows = "nixpkgs-docs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-for-bootstrap, home-manager, nix-formatter-pack, nmd, nixpkgs-docs }:
+  outputs = { self, nixpkgs, home-manager, nix-formatter-pack, nmd }:
     let
       forEachSystem = nixpkgs.lib.genAttrs [ "aarch64-linux" "x86_64-linux" ];
 
@@ -120,12 +113,12 @@
             (import ./pkgs {
               _nativeSystem = system; # system to cross-compile from
               system = "${arch}-linux"; # system to cross-compile to
-              nixpkgs = nixpkgs-for-bootstrap;
+              nixpkgs = nixpkgs;
             }).customPkgs;
 
           docs = import ./docs {
             inherit home-manager;
-            pkgs = nixpkgs-docs.legacyPackages.${system};
+            pkgs = nixpkgs.legacyPackages.${system};
             nmdSrc = nmd;
           };
         in
