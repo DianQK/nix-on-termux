@@ -45,9 +45,12 @@ let
     }
   );
 
-  customPkgs = {
+  customPkgs = rec {
     rish = callPackage ./rish { };
     mesa-termux = callPackage ./mesa-termux { };
+    nixGLTermux = pkgs.callPackage ./nixGLTermux.nix ({
+      mesa = mesa-termux;
+    });
     # bootstrap = callPackage ./bootstrap.nix { };
     # bootstrapZip = callPackage ./bootstrap-zip.nix { };
     # prootTermux = callPackage ./cross-compiling/proot-termux.nix { };
