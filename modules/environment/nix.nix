@@ -154,11 +154,11 @@ in
       nix = {
         substituters = [
           "https://cache.nixos.org"
-          "https://nix-on-droid.cachix.org"
+          "https://dianqk.cachix.org"
         ];
         trustedPublicKeys = [
           "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-          "nix-on-droid.cachix.org-1:56snoMJTXmDRC1Ei24CmKoUqvHJ9XCp+nidK7qkMQrU="
+          "dianqk.cachix.org-1:n04x/dFNWHbu2kTgTObK8+KJGu4pTV38nUnL93IYbrk="
         ];
       };
     }
