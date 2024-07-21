@@ -26,6 +26,8 @@
   ./upgrade.nix
   ./user.nix
   ./version.nix
+  ./fonts.nix
+  ./fontconfig.nix
   (pkgs.path + "/nixos/modules/misc/assertions.nix")
 
   {
