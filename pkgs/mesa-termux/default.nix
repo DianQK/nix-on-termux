@@ -88,6 +88,8 @@ in
     (lib.mesonBool "gallium-nine" true) # Direct3D in Wine
     (lib.mesonBool "osmesa" true) # used by wine
 
+    (lib.mesonOption "video-codecs" "all")
+
     (lib.mesonOption "clang-libdir" "${llvmPackages_18.clang-unwrapped.lib}/lib")
     # meson auto_features enables this, but we do not want it
     "-Dandroid-libbacktrace=disabled"
