@@ -7,6 +7,7 @@
 , vulkan-loader
 , nixos
 , libxml2
+, python3Packages
 , testers
 , hello
 , mesa
@@ -14,7 +15,7 @@
 ,
 }:
 with lib; let
-  commit = "23ef65ea3b859368c6ba4fcc66ba4d251b3f5afd";
+  commit = "0cc23b652401600e57c278d8f6fe6756b13b9f6a";
 in
 (mesa.override {
   galliumDrivers = [ "llvmpipe" "zink" ];
@@ -23,11 +24,11 @@ in
   llvmPackages = llvmPackages_18;
 }).overrideAttrs (oldAttrs: rec {
   pname = "mesa-termux";
-  version = "24.2.0-unstable-2024-07-19";
+  version = "24.2.0-unstable-2024-07-20";
 
   src = fetchurl {
     url = "https://gitlab.freedesktop.org/mesa/mesa/-/archive/${commit}/mesa-${commit}.tar.gz";
-    hash = "sha256-o4vY9tcZMlJHXJMMQ16EAU1FXkAHSq33+Ev1Asi1g2E=";
+    hash = "sha256-OJ7Y11ybHpYiOYoEyTkFVKQNn4YOiKQ+pKNwIK0244A=";
   };
   patches = oldAttrs.patches ++ [
     (fetchpatch {
@@ -49,6 +50,9 @@ in
   ];
   buildInputs = oldAttrs.buildInputs ++ [
     libxml2
+  ];
+  nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [
+    python3Packages.pyyaml
   ];
   mesonFlags = [
     "-Dgbm=disabled"
