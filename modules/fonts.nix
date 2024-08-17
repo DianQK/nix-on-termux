@@ -15,7 +15,7 @@ in
     fonts = {
       packages = lib.mkOption {
         type = with lib.types; listOf path;
-        default = [];
+        default = [ ];
         example = lib.literalExpression "[ pkgs.dejavu_fonts ]";
         description = "List of primary font packages.";
       };
