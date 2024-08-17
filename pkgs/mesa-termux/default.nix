@@ -15,37 +15,25 @@
 ,
 }:
 with lib; let
-  commit = "0cc23b652401600e57c278d8f6fe6756b13b9f6a";
+  commit = "85a70bbc05c095e1a5350c3739f1a7c905bbad86";
 in
 (mesa.override {
-  galliumDrivers = [ "llvmpipe" "zink" ];
+  galliumDrivers = [ "llvmpipe" "zink" "freedreno" ];
   vulkanDrivers = [ "freedreno" ];
   eglPlatforms = [ "x11" ];
   llvmPackages = llvmPackages_18;
 }).overrideAttrs (oldAttrs: rec {
   pname = "mesa-termux";
-  version = "24.2.0-unstable-2024-07-20";
+  version = "24.3.0-unstable-2024-08-25";
 
   src = fetchurl {
     url = "https://gitlab.freedesktop.org/mesa/mesa/-/archive/${commit}/mesa-${commit}.tar.gz";
-    hash = "sha256-OJ7Y11ybHpYiOYoEyTkFVKQNn4YOiKQ+pKNwIK0244A=";
+    hash = "sha256-gjquvYYPFSaoxNc81OeMfQXLMlLyPdEar2KhrvOoujQ=";
   };
-  patches = oldAttrs.patches ++ [
+  patches = [
     (fetchpatch {
-      url = "https://raw.githubusercontent.com/MastaG/mesa-turnip-ppa/1a69eb6d09ba1eca2f22b4760d68e27e298102d5/turnip-patches/fix-for-anon-file.patch";
-      hash = "sha256-QE0qyBjoCBBhZytHX9FwUJ67XCg+zntY2or6aBq8eNQ=";
-    })
-    (fetchpatch {
-      url = "https://raw.githubusercontent.com/MastaG/mesa-turnip-ppa/1a69eb6d09ba1eca2f22b4760d68e27e298102d5/turnip-patches/fix-for-getprogname.patch";
-      hash = "sha256-av//Yavq1Re9Fk0psm7kiWZzpDJEdG3jxV0yjcBbYhU=";
-    })
-    (fetchpatch {
-      url = "https://raw.githubusercontent.com/MastaG/mesa-turnip-ppa/1a69eb6d09ba1eca2f22b4760d68e27e298102d5/turnip-patches/zink_fixes.patch";
-      hash = "sha256-ZxRgw/Q+krS4lKgvhOUS0I5xVQOrOlh/QTwbWfiY+n8=";
-    })
-    (fetchpatch {
-      url = "https://raw.githubusercontent.com/MastaG/mesa-turnip-ppa/1a69eb6d09ba1eca2f22b4760d68e27e298102d5/turnip-patches/dri3.patch";
-      hash = "sha256-0xR36Nqre2tkrJeUnu7F7/GIS7QTS3cy2K6xvyd3svI=";
+      url = "https://raw.githubusercontent.com/NixOS/nixpkgs/abd1d7f93319df76c6fee7aee7ecd39ec6136d62/pkgs/development/libraries/mesa/opencl.patch";
+      hash = "sha256-csxRQZb5fhGcUFaB18K/8lFyosTQD/P2z7jSSEF7UJs=";
     })
   ];
   buildInputs = oldAttrs.buildInputs ++ [
@@ -100,6 +88,14 @@ in
     "-Dmicrosoft-clc=disabled"
   ];
 
+
+  postInstall = lib.strings.concatStrings [
+    oldAttrs.postInstall
+    ''
+      moveToOutput "lib/libgallium*" $drivers
+    ''
+  ];
+
   postFixup = ''
     # set the default search path for DRI drivers; used e.g. by X server
     for pc in lib/pkgconfig/{dri,d3d}.pc; do
@@ -135,7 +131,8 @@ in
     done
 
     # add RPATH here so Zink can find libvulkan.so
-    patchelf --add-rpath ${vulkan-loader}/lib $drivers/lib/dri/libgallium.so
+    find $drivers/lib
+    patchelf --add-rpath ${vulkan-loader}/lib $drivers/lib/libgallium*.so
   '';
 
   outputs = [ "out" "dev" "drivers" "driversdev" "opencl" "osmesa" ];
