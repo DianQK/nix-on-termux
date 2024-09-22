@@ -2,7 +2,7 @@
   description = "Nix-enabled environment for your Android device";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/c3aa7b8938b17aebd2deecf7be0636000d62a2b9";
+    nixpkgs.url = "github:NixOS/nixpkgs/c04d5652cfa9742b1d519688f65d1bbccea9eb7e";
 
     home-manager = {
       url = "github:nix-community/home-manager/master";
