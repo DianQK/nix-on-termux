@@ -66,7 +66,7 @@ in
     "-Dllvm=enabled"
     "-Dshared-llvm=disabled"
     "-Dplatforms=x11"
-    "-Dgallium-drivers=llvmpipe,zink"
+    "-Dgallium-drivers=llvmpipe,zink,freedreno"
     "-Dxmlconfig=disabled"
     "-Dvulkan-drivers=freedreno"
     "-Dfreedreno-kmds=msm,kgsl"
